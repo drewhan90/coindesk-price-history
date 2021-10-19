@@ -1,6 +1,9 @@
 import React from 'react'
 
+import Table from './components/Table'
+
 import fetchCoinList from './utils/fetchCoinList'
+import fetchCoinMarketChart from './utils/fetchCoinMarketChart'
 
 const App = () =>  {
   const [coinList, setCoinList] = React.useState()
@@ -8,6 +11,7 @@ const App = () =>  {
   const [filteredCoinList, setFilteredCoinList] = React.useState()
   const [displayDropdown, setDisplayDropdown] = React.useState()
   const [selectedCoinId, setSelectedCoinId] = React.useState()
+  const [coinMarketChartData, setCoinMarketChartData] = React.useState()
 
   const getCoinList = async () => {
     const _coinList = await fetchCoinList()
@@ -47,9 +51,19 @@ const App = () =>  {
     setDisplayDropdown(false)
   }
 
+  const getCointMarketChart = async () => {
+    if (selectedCoinId) {
+      const _coinMarketChartData = await fetchCoinMarketChart(selectedCoinId)
+      setCoinMarketChartData(_coinMarketChartData)
+    }
+  }
+      
+  console.log({ coinMarketChartData })
+
   return (
-    <div className="App">
-      <div style={{ border: '1px solid black'}}>
+    <div style={{ padding: 16 }}>
+      <div>
+        <label htmlFor="search">Coin: </label>
         <input
           type="text"
           id="search"
@@ -80,7 +94,8 @@ const App = () =>  {
             )
         }
       </div>
-      <button>Get price history</button>
+      <button onClick={getCointMarketChart}>Get price history</button>
+      <Table data={coinMarketChartData} />
     </div>
   );
 }

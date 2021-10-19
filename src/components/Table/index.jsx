@@ -1,29 +1,55 @@
 import moment from 'moment'
 
 const Table = ({ data }) => {
-  if (!data) return null
-  debugger
+  if (!data) return <div>Please select a coin.</div>
   return (
     <div>
-      <div>
-        <div>October 18, 2021</div>
-        <div>Monday</div>
-        <div>CA$3.42</div>
-        <div>CA$0.61</div>
-        <div>21.9%</div>
+      <div 
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          borderTop: '1px solid gray',
+          borderBottom: '1px solid #EDEEF0',
+          paddingTop: 8,
+          paddingBottom: 8,
+          paddingLeft: 16,
+          paddingRight: 16,
+          fontWeight: 'bold'
+        }}
+      >
+        <div style={{ flex: 0.2 }}>Date</div>
+        <div style={{ flex: 0.2 }}>Day of the week</div>
+        <div style={{ flex: 0.2 }}>Price</div>
+        <div style={{ flex: 0.2, textAlign: 'right' }}>Volume (24H)</div>
+        <div style={{ flex: 0.2, textAlign: 'right' }}>Market cap</div>
       </div>
-      {
-        data.entries.length && data.entries.map((item) => {
-          const date = moment(item[0]).format('MMMM DD, YYYY')
-          const price = item[1]
-          return (
-            <div>
-              <div>{date}</div>
-              <div>{price}</div>
-            </div>
-          )
-        })
-      }
+      <div>
+        {
+          Object.keys(data).map((date, i) => {
+            console.log({ date })
+            return (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  borderTop: '1px solid #EDEEF0',
+                  paddingTop: 12,
+                  paddingBottom: 12,
+                  backgroundColor: i % 2 ? 'white' : '#F2F2F2',
+                  paddingLeft: 16,
+                  paddingRight: 16
+                }}
+              >
+                <div style={{ flex: 0.2, textAlign: 'left' }}>{moment.unix(date / 1000).format('MMMM DD, YYYY')}</div>
+                <div style={{ flex: 0.2, textAlign: 'left' }}>{moment.unix(date / 1000).format('dddd')}</div>
+                <div style={{ flex: 0.2, textAlign: 'left' }}>{`CA$${data[date].price}`}</div>
+                <div style={{ flex: 0.2, textAlign: 'right' }}>{`CA$${data[date].total_volume}`}</div>
+                <div style={{ flex: 0.2, textAlign: 'right' }}>{`CA$${data[date].market_cap}`}</div>
+              </div>
+            )
+          })
+        }
+      </div>
     </div>
   )
 }
