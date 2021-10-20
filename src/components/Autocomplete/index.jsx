@@ -1,6 +1,8 @@
 import React from 'react'
 import pt from 'prop-types'
 
+import { Container, Input, Dropdown, DropdownItem } from './styles'
+
 const Autocomplete = ({ list, getCointMarketChart }) => {
   const dropdownRef = React.useRef()
   const [searchValue, setSearchValue] = React.useState('')
@@ -35,6 +37,7 @@ const Autocomplete = ({ list, getCointMarketChart }) => {
     }
   }, [])
 
+
   React.useMemo(() => {
     // Debounce this
     // Filter by symbol
@@ -48,59 +51,39 @@ const Autocomplete = ({ list, getCointMarketChart }) => {
   }, [searchValue, list])
 
   return (
-    <div style={{ width: '40%', position: 'relative', marginBottom: 24 }}>
+    <Container>
         <label htmlFor="search" style={{ marginRight: 12 }}>Coin</label>
         <div>
-          <input
+          <Input
             type="text"
             id="search"
             name="search"
             value={searchValue}
-            style={{ width: '100%', height: 25, border: '1px solid #494949', marginTop: 12 }}
             onChange={handleSearchInputChange}
           />
           {
             displayDropdown && (
-              <div
-                ref={dropdownRef}
-                style={{
-                  width: '100%',
-                  height: 240,
-                  overflow: 'scroll',
-                  position: 'absolute',
-                  border: '1px solid #EDEEF0',
-                  backgroundColor: 'white'
-                }}
-              >
+              <Dropdown ref={dropdownRef}>
                 {
                   (filteredCoinList && filteredCoinList.length) ? filteredCoinList.map((coin) => {
                     return (
-                      <div
+                      <DropdownItem
                         key={coin.id}
                         id={coin.id}
                         onClick={handleDropdownItemClick(coin)}
-                        style={{
-                          textAlign: 'left center',
-                          cursor: 'pointer',
-                          height: 42,
-                          paddingleft: 16,
-                          paddingTop: 8,
-                          paddingBottom: 8,
-                          lineHeight: 2
-                        }}
                       >
                         {coin.name}
-                      </div>
+                      </DropdownItem>
                     )
                   }) : (
                     <div style={{ padding: 16 }}>There are no results.</div>
                   )
                 }
-              </div>
+              </Dropdown>
               )
           }
         </div>
-      </div>
+      </Container>
   )
 }
 
