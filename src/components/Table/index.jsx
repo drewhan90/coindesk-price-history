@@ -1,7 +1,7 @@
 import moment from 'moment'
 import pt from 'prop-types'
 
-import { Title, TableHead, TableRow, TableCol } from './styles'
+import { Title, TableWrapper, TableHead, TableRow, TableCol } from './styles'
 
 const Table = ({ data, coinName }) => {
   if (!data) return <div>Please select a coin.</div>
@@ -20,28 +20,30 @@ const Table = ({ data, coinName }) => {
           to CAD
         </Title>)
       }
-      <TableHead>
-        <TableCol>Date</TableCol>
-        <TableCol>Day of the week</TableCol>
-        <TableCol>Price</TableCol>
-        <TableCol textAlign="right">Volume (24H)</TableCol>
-        <TableCol textAlign="right">Market cap</TableCol>
-      </TableHead>
-      <div>
-        {
-          Object.keys(data).map((date, i) => {
-            return (
-              <TableRow>
-                <TableCol>{moment.unix(date / 1000).format('MMMM DD, YYYY')}</TableCol>
-                <TableCol>{moment.unix(date / 1000).format('dddd')}</TableCol>
-                <TableCol>{cadCurrencyFormatter.format(data[date].price)}</TableCol>
-                <TableCol textAlign="right">{cadCurrencyFormatter.format(data[date].total_volume)}</TableCol>
-                <TableCol textAlign="right">{cadCurrencyFormatter.format(data[date].market_cap)}</TableCol>
-              </TableRow>
-            )
-          })
-        }
-      </div>
+      <TableWrapper>
+        <TableHead>
+          <TableCol>Date</TableCol>
+          <TableCol>Day of the week</TableCol>
+          <TableCol>Price</TableCol>
+          <TableCol textAlign="right">Volume (24H)</TableCol>
+          <TableCol textAlign="right">Market cap</TableCol>
+        </TableHead>
+        <div>
+          {
+            Object.keys(data).map((date, i) => {
+              return (
+                <TableRow>
+                  <TableCol>{moment.unix(date / 1000).format('MMMM DD, YYYY')}</TableCol>
+                  <TableCol>{moment.unix(date / 1000).format('dddd')}</TableCol>
+                  <TableCol>{cadCurrencyFormatter.format(data[date].price)}</TableCol>
+                  <TableCol textAlign="right">{cadCurrencyFormatter.format(data[date].total_volume)}</TableCol>
+                  <TableCol textAlign="right">{cadCurrencyFormatter.format(data[date].market_cap)}</TableCol>
+                </TableRow>
+              )
+            })
+          }
+        </div>
+      </TableWrapper>
     </div>
   )
 }

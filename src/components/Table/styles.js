@@ -8,6 +8,11 @@ const Title = styled.h1`
   margin-bottom: 32px;
 `
 
+const TableWrapper = styled.div`
+  overflow: scroll;
+  max-width: 1128px;
+`
+
 const TableHead = styled.div`
   display: flex;
   justify-content: space-between;
@@ -18,6 +23,10 @@ const TableHead = styled.div`
   padding-left: 16px;
   padding-right: 16px;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    width: 600px;
+  }
 `
 
 const TableRow = styled.div`
@@ -29,6 +38,10 @@ const TableRow = styled.div`
   padding-left: 16px;
   padding-right: 16px;
   background-color: ${props => props.isEven ? 'white' : grey};
+
+  @media (max-width: 768px) {
+    width: 600px;
+  }
 `
 
 const TableCol = styled.div`
@@ -36,4 +49,4 @@ const TableCol = styled.div`
   text-align: ${props => props.textAlign || 'left'};
 `
 
-export { Title, TableHead, TableRow, TableCol }
+export { Title, TableWrapper, TableHead, TableRow, TableCol }

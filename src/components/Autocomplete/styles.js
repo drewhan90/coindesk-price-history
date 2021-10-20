@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 const Container = styled.div`
-  width: 40%;
+  max-width: 400px;
+  width: 100%;
   position: relative;
   margin-bottom: 24px;
 `
