@@ -6,17 +6,30 @@ import fetchCoinList from './utils/fetchCoinList'
 import fetchCoinMarketChart from './utils/fetchCoinMarketChart'
 
 const App = () =>  {
+  const dropdownRef = React.useRef()
   const [coinList, setCoinList] = React.useState()
   const [searchValue, setSearchValue] = React.useState('')
   const [filteredCoinList, setFilteredCoinList] = React.useState()
   const [displayDropdown, setDisplayDropdown] = React.useState()
-  const [selectedCoinId, setSelectedCoinId] = React.useState()
   const [coinMarketChartData, setCoinMarketChartData] = React.useState()
 
   const getCoinList = async () => {
     const _coinList = await fetchCoinList()
     setCoinList(_coinList)
   }
+
+  const handleClickAwayDropdown = () => {
+    if (dropdownRef) {
+      console.log({ dropdownRef })
+    }
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('mousedown', handleClickAwayDropdown)
+    return () => {
+      window.removeEventListener('mousedown', handleClickAwayDropdown)
+    }
+  }, [])
 
   React.useEffect(() => {
     if (!coinList) {
@@ -47,54 +60,73 @@ const App = () =>  {
 
   const handleDropdownItemClick = (coin) => () => {
     updateSearchValue(coin.name)
-    setSelectedCoinId(coin.id)
     setDisplayDropdown(false)
+    getCointMarketChart(coin.id)
   }
 
-  const getCointMarketChart = async () => {
-    if (selectedCoinId) {
-      const _coinMarketChartData = await fetchCoinMarketChart(selectedCoinId)
+  const getCointMarketChart = async (coinId) => {
+    if (coinId) {
+      const _coinMarketChartData = await fetchCoinMarketChart(coinId)
       setCoinMarketChartData(_coinMarketChartData)
     }
   }
-      
-  console.log({ coinMarketChartData })
 
+  // TODO onHover the dropdown
+      
   return (
-    <div style={{ padding: 16 }}>
-      <div>
-        <label htmlFor="search">Coin: </label>
-        <input
-          type="text"
-          id="search"
-          name="search"
-          value={searchValue}
-          style={{ width: '100%' }}
-          onChange={handleSearchInputChange}
-        />
-        {
-          displayDropdown && (
-            <div style={{ height: 150, backgroundColor: 'grey', overflow: 'scroll' }}>
-              {
-                (filteredCoinList && filteredCoinList.length) ? filteredCoinList.map((coin) => {
-                  return (
-                    <div
-                      id={coin.id}
-                      onClick={handleDropdownItemClick(coin)}
-                      style={{ textAlign: 'left', cursor: 'pointer' }}
-                    >
-                      {coin.symbol}: {coin.name}
-                    </div>
+    <div style={{ padding: 24 }}>
+      <div style={{ width: '40%', position: 'relative', marginBottom: 24 }}>
+        <label htmlFor="search" style={{ marginRight: 12 }}>Coin</label>
+        <div>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            value={searchValue}
+            style={{ width: '100%', height: 25, border: '1px solid #494949', marginTop: 12 }}
+            onChange={handleSearchInputChange}
+          />
+          {
+            displayDropdown && (
+              <div
+                ref={dropdownRef}
+                style={{
+                  width: '100%',
+                  height: 240,
+                  overflow: 'scroll',
+                  position: 'absolute',
+                  border: '1px solid #EDEEF0',
+                  backgroundColor: 'white'
+                }}
+              >
+                {
+                  (filteredCoinList && filteredCoinList.length) ? filteredCoinList.map((coin) => {
+                    return (
+                      <div
+                        id={coin.id}
+                        onClick={handleDropdownItemClick(coin)}
+                        style={{
+                          textAlign: 'left center',
+                          cursor: 'pointer',
+                          height: 42,
+                          paddingleft: 16,
+                          paddingTop: 8,
+                          paddingBottom: 8,
+                          lineHeight: 2
+                        }}
+                      >
+                        {coin.name}
+                      </div>
+                    )
+                  }) : (
+                    <div style={{ padding: 16 }}>There are no results.</div>
                   )
-                }) : (
-                  <div>There are no results.</div>
-                )
-              }
-            </div>
-            )
-        }
+                }
+              </div>
+              )
+          }
+        </div>
       </div>
-      <button onClick={getCointMarketChart}>Get price history</button>
       <Table data={coinMarketChartData} />
     </div>
   );

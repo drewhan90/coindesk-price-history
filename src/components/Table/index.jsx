@@ -1,4 +1,5 @@
 import moment from 'moment'
+import pt from 'prop-types'
 
 const Table = ({ data }) => {
   if (!data) return <div>Please select a coin.</div>
@@ -8,7 +9,7 @@ const Table = ({ data }) => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          borderTop: '1px solid gray',
+          borderTop: '2px solid #EDEEF0',
           borderBottom: '1px solid #EDEEF0',
           paddingTop: 8,
           paddingBottom: 8,
@@ -26,7 +27,6 @@ const Table = ({ data }) => {
       <div>
         {
           Object.keys(data).map((date, i) => {
-            console.log({ date })
             return (
               <div
                 style={{
@@ -52,6 +52,14 @@ const Table = ({ data }) => {
       </div>
     </div>
   )
+}
+
+Table.propTypes = {
+  data: pt.object
+}
+
+Table.defaultProps = {
+  data: null
 }
 
 export default Table
