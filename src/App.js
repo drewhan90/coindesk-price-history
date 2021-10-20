@@ -18,9 +18,9 @@ const App = () =>  {
     setCoinList(_coinList)
   }
 
-  const handleClickAwayDropdown = () => {
-    if (dropdownRef) {
-      console.log({ dropdownRef })
+  const handleClickAwayDropdown = (e) => {
+    if (dropdownRef && dropdownRef.current && !dropdownRef.current.contains(e.target) ) {
+      setDisplayDropdown(false)
     }
   }
 
