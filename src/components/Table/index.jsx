@@ -1,12 +1,20 @@
 import moment from 'moment'
 import pt from 'prop-types'
 
-import { TableHead, TableRow, TableCol } from './styles'
+import { Title, TableHead, TableRow, TableCol } from './styles'
 
-const Table = ({ data }) => {
+const Table = ({ data, coinName }) => {
   if (!data) return <div>Please select a coin.</div>
+  console.log({ data })
   return (
-    <div>
+    <div style={{ marginTop: 42 }}>
+      {coinName && (
+        <Title>
+          7 day price history of
+          <span style={{ color: '#F2931A' }}> {coinName} </span> 
+          to CAD
+        </Title>)
+      }
       <TableHead>
         <TableCol>Date</TableCol>
         <TableCol>Day of the week</TableCol>
@@ -34,11 +42,13 @@ const Table = ({ data }) => {
 }
 
 Table.propTypes = {
-  data: pt.object
+  data: pt.object,
+  coinName: pt.string
 }
 
 Table.defaultProps = {
-  data: null
+  data: null,
+  coinName: ''
 }
 
 export default Table

@@ -1,7 +1,7 @@
 import React from 'react'
 import pt from 'prop-types'
 
-import { Container, Input, Dropdown, DropdownItem } from './styles'
+import { Container, Label, Input, Dropdown, DropdownItem } from './styles'
 
 const Autocomplete = ({ list, getCointMarketChart }) => {
   const dropdownRef = React.useRef()
@@ -21,7 +21,7 @@ const Autocomplete = ({ list, getCointMarketChart }) => {
   const handleDropdownItemClick = (coin) => () => {
     updateSearchValue(coin.name)
     setDisplayDropdown(false)
-    getCointMarketChart(coin.id)
+    getCointMarketChart(coin)
   }
 
   const handleClickAwayDropdown = (e) => {
@@ -52,7 +52,10 @@ const Autocomplete = ({ list, getCointMarketChart }) => {
 
   return (
     <Container>
-        <label htmlFor="search" style={{ marginRight: 12 }}>Coin</label>
+        <div>
+          <Label htmlFor="search">Coin</Label>
+          <span style={{ fontSize: 14, fontStyle: 'italic' }}>Please select a coin using the dropdown field</span>
+        </div>
         <div>
           <Input
             type="text"

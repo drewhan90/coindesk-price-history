@@ -3,6 +3,11 @@ import styled from 'styled-components'
 const lightGrey = '#EDEEF0'
 const grey = '#F2F2F2'
 
+const Title = styled.h1`
+  font-weight: 500;
+  margin-bottom: 32px;
+`
+
 const TableHead = styled.div`
   display: flex;
   justify-content: space-between;
@@ -31,4 +36,4 @@ const TableCol = styled.div`
   text-align: ${props => props.textAlign || 'left'};
 `
 
-export { TableHead, TableRow, TableCol }
+export { Title, TableHead, TableRow, TableCol }

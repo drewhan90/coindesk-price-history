@@ -6,11 +6,23 @@ const Container = styled.div`
   margin-bottom: 24px;
 `
 
+const Label = styled.label`
+  margin-right: 16px;
+  font-weight: 700;
+  font-size: 16px;
+`
+
 const Input = styled.input`
+  box-sizing: border-box;
   width: 100%;
-  height: 25px;
+  font-size: 16px;
+  height: 36px;
   border: 1px solid #494949;
   margin-top: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
 `
 
 const Dropdown = styled.div`
@@ -36,4 +48,4 @@ const DropdownItem = styled.div`
   }
 `
 
-export { Container, Input, Dropdown, DropdownItem }
+export { Container, Label, Input, Dropdown, DropdownItem }

@@ -9,6 +9,7 @@ import fetchCoinMarketChart from './utils/fetchCoinMarketChart'
 const App = () =>  {
   const [coinList, setCoinList] = React.useState()
   const [coinMarketChartData, setCoinMarketChartData] = React.useState()
+  const [coinName, setCoinName] = React.useState()
 
   const getCoinList = async () => {
     const _coinList = await fetchCoinList()
@@ -21,10 +22,11 @@ const App = () =>  {
     }
   }, [coinList])
 
-  const getCointMarketChart = async (coinId) => {
-    if (coinId) {
-      const _coinMarketChartData = await fetchCoinMarketChart(coinId)
+  const getCointMarketChart = async (coin) => {
+    if (coin) {
+      const _coinMarketChartData = await fetchCoinMarketChart(coin.id)
       setCoinMarketChartData(_coinMarketChartData)
+      setCoinName(coin.name)
     }
   }
 
@@ -33,7 +35,7 @@ const App = () =>  {
   return (
     <div style={{ padding: 24 }}>
       <Autocomplete list={coinList} getCointMarketChart={getCointMarketChart} />
-      <Table data={coinMarketChartData} />
+      <Table data={coinMarketChartData} coinName={coinName} />
     </div>
   )
 }
