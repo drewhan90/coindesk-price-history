@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# CoinGecko market chart table
+A simple table UI that has an autocomplete search field to look up coins.
+Once a coin is selected, a table will be rendered to display a 7 day history with price, market cap, and 24h volume.
+See more information on CoinGeck API [here](https://www.coingecko.com/en/api/documentation)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
