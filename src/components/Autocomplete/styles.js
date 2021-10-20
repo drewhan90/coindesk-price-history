@@ -38,7 +38,7 @@ const Dropdown = styled.div`
 const DropdownItem = styled.div`
   text-align: left;
   cursor: pointer;
-  height: 42px;
+  height: 56px;
   padding-left: 16px;
   padding-top: 8px;
   padding-bottom: 8px;

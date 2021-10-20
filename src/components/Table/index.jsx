@@ -32,7 +32,7 @@ const Table = ({ data, coinName }) => {
           {
             Object.keys(data).map((date, i) => {
               return (
-                <TableRow>
+                <TableRow key={date}>
                   <TableCol>{moment.unix(date / 1000).format('MMMM DD, YYYY')}</TableCol>
                   <TableCol>{moment.unix(date / 1000).format('dddd')}</TableCol>
                   <TableCol>{cadCurrencyFormatter.format(data[date].price)}</TableCol>

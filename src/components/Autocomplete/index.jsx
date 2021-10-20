@@ -1,5 +1,6 @@
 import React from 'react'
 import pt from 'prop-types'
+import { debounce } from 'lodash'
 
 import { Container, Label, Input, Dropdown, DropdownItem } from './styles'
 
@@ -13,10 +14,10 @@ const Autocomplete = ({ list, getCointMarketChart }) => {
     setSearchValue(value)
   }
 
-  const handleSearchInputChange = (e) => {
+  const handleSearchInputChange = React.useCallback((e) => {
     updateSearchValue(e.target.value)
     setDisplayDropdown(true)
-  }
+  }, [])
 
   const handleDropdownItemClick = (coin) => () => {
     updateSearchValue(coin.name)
@@ -30,17 +31,19 @@ const Autocomplete = ({ list, getCointMarketChart }) => {
     }
   }
 
+  const debouncedResults = React.useMemo(() => {
+    return debounce(handleSearchInputChange, 300)
+  }, [handleSearchInputChange])
+
   React.useEffect(() => {
     window.addEventListener('mousedown', handleClickAwayDropdown)
     return () => {
       window.removeEventListener('mousedown', handleClickAwayDropdown)
+      debouncedResults.cancel()
     }
-  }, [])
-
+  }, [debouncedResults])
 
   React.useMemo(() => {
-    // Debounce this
-    // Filter by symbol
     if (list && searchValue) {
       const _filteredCoinList = list.filter((coin) => {
         return coin.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -61,8 +64,7 @@ const Autocomplete = ({ list, getCointMarketChart }) => {
             type="text"
             id="search"
             name="search"
-            value={searchValue}
-            onChange={handleSearchInputChange}
+            onChange={debouncedResults}
           />
           {
             displayDropdown && (
