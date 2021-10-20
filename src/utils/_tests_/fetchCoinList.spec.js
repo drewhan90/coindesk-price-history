@@ -1,4 +1,4 @@
-import fetchCoinList from '../fetchCointList'
+import fetchCoinList from '../fetchCoinList'
 
 describe('Fetch coin list', () => {
   it('Should return coin list', async () => {
