@@ -5,7 +5,12 @@ import { Title, TableHead, TableRow, TableCol } from './styles'
 
 const Table = ({ data, coinName }) => {
   if (!data) return <div>Please select a coin.</div>
-  console.log({ data })
+
+  const cadCurrencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'CAD',
+  })
+
   return (
     <div style={{ marginTop: 42 }}>
       {coinName && (
@@ -29,9 +34,9 @@ const Table = ({ data, coinName }) => {
               <TableRow>
                 <TableCol>{moment.unix(date / 1000).format('MMMM DD, YYYY')}</TableCol>
                 <TableCol>{moment.unix(date / 1000).format('dddd')}</TableCol>
-                <TableCol>{`CA$${data[date].price}`}</TableCol>
-                <TableCol textAlign="right">{`CA$${data[date].total_volume}`}</TableCol>
-                <TableCol textAlign="right">{`CA$${data[date].market_cap}`}</TableCol>
+                <TableCol>{cadCurrencyFormatter.format(data[date].price)}</TableCol>
+                <TableCol textAlign="right">{cadCurrencyFormatter.format(data[date].total_volume)}</TableCol>
+                <TableCol textAlign="right">{cadCurrencyFormatter.format(data[date].market_cap)}</TableCol>
               </TableRow>
             )
           })
