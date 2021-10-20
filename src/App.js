@@ -30,8 +30,6 @@ const App = () =>  {
     }
   }
 
-  // TODO onHover the dropdown
-      
   return (
     <div style={{ padding: 24 }}>
       <Autocomplete list={coinList} getCointMarketChart={getCointMarketChart} />
